@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'package:craftsman/models/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:craftsman/models/user.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 enum authProblems { UserNotFound, PasswordNotValid, NetworkError, UnknownError }
+
 
 class Auth {
   static Future<String> signIn(String email, String password) async {
@@ -37,12 +41,12 @@ class Auth {
   static void addUser(User user) async {
     checkUserExist(user.userID).then((value) {
       if (!value) {
-        print("user ${user.firstName} ${user.email} added");
+        print("user ${user.userName} ${user.email} added");
         Firestore.instance
             .document("users/${user.userID}")
             .setData(user.toJson());
       } else {
-        print("user ${user.firstName} ${user.email} exists");
+        print("user ${user.userName} ${user.email} exists");
       }
     });
   }
@@ -78,10 +82,10 @@ class Auth {
     if (e is PlatformException) {
       switch (e.message) {
         case 'There is no user record corresponding to this identifier. The user may have been deleted.':
-          return 'User with this e-mail not found.';
+          return 'Incorrect Email or password.';
           break;
         case 'The password is invalid or the user does not have a password.':
-          return 'Invalid password.';
+          return 'Incorrect Email or password.';
           break;
         case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
           return 'No internet connection.';

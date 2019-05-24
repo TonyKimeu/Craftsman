@@ -1,3 +1,4 @@
+import 'package:craftsman/ui/screens/Customer/customer_navigation.dart';
 import 'package:flutter/material.dart';
 import "package:craftsman/ui/screens/walk_screen.dart";
 import 'package:craftsman/ui/screens/root_screen.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
         '/signin': (BuildContext context) => new SignInScreen(),
         '/signup': (BuildContext context) => new SignUpScreen(),
         '/main': (BuildContext context) => new MainScreen(),
+        '/customer': (BuildContext context) => new CustomerNavigation(),
+        '/craftsman': (BuildContext context) => new MainScreen(),
       },
       theme: ThemeData(
         primaryColor: Colors.white,

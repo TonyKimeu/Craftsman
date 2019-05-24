@@ -1,0 +1,16 @@
+[
+  {
+    "uuid": 1110,
+    "username": "Antony Kimeu",
+    "email": "tony@kimeu.com",
+    "phone": "0706745607",
+    "role": "customer"
+  },
+  {
+    "uuid": 1111,
+    "username": "Marc Mandela",
+    "email": "marc@mandela.com",
+    "phone": "0706745607",
+    "role": "craftsman"
+  }
+]

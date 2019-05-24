@@ -192,7 +192,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Auth.addUser(new User(
               userID: uID,
               email: email,
-              firstName: fullname,
+              userName: fullname,
+              role: "customer",
+              phone: number,
               profilePictureURL: ''));
           onBackPress();
         });
