@@ -26,6 +26,16 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+    
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+        <!-- Copied from GoogleServices-Info.plist key REVERSED_CLIENT_ID -->
+    <string>com.googleusercontent.apps.321756328812-igav1nnhq24l9d70s88lvccjeucu7uf1</string>
+    </array>
+
+    
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
