@@ -1,10 +1,9 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:craftsman/ui/widgets/platform_button.dart';
+import 'package:craftsman/models/Project.dart';
 import 'package:craftsman/utils/business/Auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
+import 'craftsman_milestones.dart';
 
 class CraftsmanTasks extends StatefulWidget {
   @override
@@ -13,13 +12,14 @@ class CraftsmanTasks extends StatefulWidget {
 
 
 final dummySnapshot = [
-  {"id": 1,"assignmentTitle": "Bathroom renovation", "companyName": "Tech Factory", "contactPerson":"Antony Kimeu","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 2,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 3,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 4,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 5,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 6,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
-  {"id": 7,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred Kiguru","phoneNumber":"254720123120", "milestoneCount":5},
+  {"id": 1,"assignmentTitle": "Bathroom renovation", "companyName": "Tech Factory", "contactPerson":"Antony","phoneNumber":"254720123120", "milestoneCount":5, "milestoneCompleteCount":4,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 2,"assignmentTitle": "Office Repainting", "companyName": "Tech Factory", "contactPerson":"Alfred","phoneNumber":"254720123120", "milestoneCount":7, "milestoneCompleteCount":5,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 3,"assignmentTitle": "Livingroom Furnishing", "companyName": "Tech Factory", "contactPerson":"Marc","phoneNumber":"254720123120", "milestoneCount":6, "milestoneCompleteCount":5,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 4,"assignmentTitle": "Bedroom Repainting", "companyName": "Tech Factory", "contactPerson":"Nelson","phoneNumber":"254720123120", "milestoneCount":5, "milestoneCompleteCount":1,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 5,"assignmentTitle": "Flooring", "companyName": "Tech Factory", "contactPerson":"Simon","phoneNumber":"254720123120", "milestoneCount":5, "milestoneCompleteCount":0,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 6,"assignmentTitle": "Kitchen Cabinetry", "companyName": "Tech Factory", "contactPerson":"Tim","phoneNumber":"254720123120", "milestoneCount":10, "milestoneCompleteCount":5,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]},
+  {"id": 7,"assignmentTitle": "Finishing", "companyName": "Tech Factory", "contactPerson":"Luis","phoneNumber":"254720123120", "milestoneCount":5, "milestoneCompleteCount":0,"description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "projectImages": ["https://www.magnonindia.com/wp-content/uploads/2018/10/kitchen-a3.jpg","https://4.imimg.com/data4/TY/JP/MY-9293913/modular-kitchen-interior-designing-500x500.jpg","https://3.imimg.com/data3/HU/AW/MY-6756431/kitchen-furniture-500x500.jpg"]}
+
 ];
 
 
@@ -73,7 +73,8 @@ class CraftsmanTasksState extends State<CraftsmanTasks> {
   }
 
   Widget _buildListItem(BuildContext context, Map data) {
-    final record = Record.fromMap(data);
+    final record = Project.fromMap(data);
+    double percentage = record.milestoneCompleteCount * 100/ record.milestoneCount;
 
     return new Card(
       elevation: 5,
@@ -167,7 +168,29 @@ class CraftsmanTasksState extends State<CraftsmanTasks> {
 
 
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 2, 0, 5),
+                        child: new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 200,
+                          animation: true,
+                          lineHeight: 7.0,
+                          animationDuration: 2000,
+                          percent: percentage/100.0,
+                          center: Text(
+                             percentage.toInt().toString()+"%",
+                            style: TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "OpenSans",
+                            ),
+                          ),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.blue,
+                        ),
+                      ),
 
                     ],
                   ),
@@ -175,30 +198,16 @@ class CraftsmanTasksState extends State<CraftsmanTasks> {
               )
             ],
           ),
-          trailing:  Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Container(
-                  child: Text(
-                    "2/"+record.milestoneCount.toString(),
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 48, 48, 54),
-                      decoration: TextDecoration.none,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "OpenSans",
-                    ),
-                  ),
-                ),
-              ),
-
-            ],
-          ),
           //Onclick
-          onTap: () => print(record),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CraftsmanMilestones(
+                    project: record,
+                  )),
+            );
+          },
         ),
       ),
     );
@@ -208,32 +217,4 @@ class CraftsmanTasksState extends State<CraftsmanTasks> {
   void _logOut() async {
     Auth.signOut();
   }
-}
-
-class Record {
-  final String assignmentTitle,companyName,contactPerson,phoneNumber;
-  final int id, milestoneCount;
-  final DocumentReference reference;
-
-  Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['id'] != null),
-        assert(map['assignmentTitle'] != null),
-        assert(map['companyName'] != null),
-        assert(map['contactPerson'] != null),
-        assert(map['phoneNumber'] != null),
-        assert(map['milestoneCount'] != null),
-        id = map['id'],
-        assignmentTitle = map['assignmentTitle'],
-        companyName = map['companyName'],
-        contactPerson = map['contactPerson'],
-        phoneNumber = map['phoneNumber'],
-        milestoneCount = map['milestoneCount'];
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$id:$assignmentTitle:$companyName:$contactPerson:$phoneNumber:$milestoneCount>";
-
-
 }

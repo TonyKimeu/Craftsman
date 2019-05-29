@@ -14,6 +14,27 @@ class Auth {
   static Future<String> signIn(String email, String password) async {
     FirebaseUser user = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+
+    /*if(email === 'a@a.local' && password === '1234'){
+      // Return user details as validated.
+      data[];
+      data = {
+
+        result{
+          name: "me",
+          email: "a@a.local",
+          role: "client",
+          uhash: "fsty536373hvfhht357383dgdhdddfe46"
+        },
+
+      };
+      return data;
+    }else{
+
+      // Return failed data array.
+
+    }
+*/
     return user.uid;
   }
 

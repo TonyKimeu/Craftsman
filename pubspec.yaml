@@ -14,7 +14,7 @@ description: Craftsman
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -24,6 +24,9 @@ dependencies:
   firebase_auth: ^0.11.1
   cloud_firestore: any
   http: ^0.12.0+2
+  percent_indicator: ^1.0.16
+  smooth_star_rating: 1.0.2
+  folding_cell: "^0.1.2"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
